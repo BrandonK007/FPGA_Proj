@@ -14,7 +14,9 @@ first custom expansion PCB.
 | Host family | AMD Zynq-7000, Zynq-7020 recommended | Brandon; AMD UG585 |
 | Reference example | Digilent Zybo Z7-20; not yet selected or purchased | Brandon; budget, borrowing, board revision/tool support |
 | Hardware contribution | Custom low-voltage SPI expansion PCB | Ahmad |
-| First complete demo | Arm C -> AXI4-Lite -> SPI -> loopback/peripheral -> readback | Both |
+| First complete demo | Capture a known low-voltage waveform, read ADC samples through FPGA/Arm, plot on computer; software FFT afterward | Both |
+| Analog input | Voltage range, offset, bandwidth, conditioning and anti-alias filter TBD | Ahmad; signal requirements and ADC datasheet |
+| Sample rate | TBD; distinct from SPI clock and internal logic clock | Both; ADC conversion/transfer timing and input bandwidth |
 | Control bus | 32-bit AXI4-Lite | Brandon; register map and Arm IHI 0022 H.c |
 | Logic clock | 50 MHz target; not achieved | Brandon; constraints and timing report |
 | SPI | Mode 0, one select, 1 MHz initial target | Both; selected device datasheet |
@@ -23,7 +25,7 @@ first custom expansion PCB.
 | Signal voltage | 3.3 V target only if host and peripheral support it | Both; exact board/device specifications |
 | Power source | Host connector versus separate supply: TBD; prevent back-powering | Ahmad; load budget and host limits |
 | PCB stackup | Evaluate two-layer FR-4 for expansion board; not finalized | Ahmad; return-path review and fabricator |
-| Peripheral part | TBD; compare two choices or loopback-first implementation | Ahmad with Brandon |
+| Peripheral part | SPI ADC TBD; compare two candidates after input requirements; synthetic samples/loopback for early tests | Ahmad with Brandon |
 | Tool versions | KiCad 10.0.x; Vivado/Vitis/simulator versions TBD | Both |
 | Hardware status | No board owned, no measurements | Both |
 

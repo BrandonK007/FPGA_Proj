@@ -1,4 +1,8 @@
-# AMD Zynq + Arm peripheral and PCB project
+# AMD Zynq + Arm waveform and spectrum analyzer
+
+**New to FPGAs? Start with the [beginner reference sheet](docs/beginner-reference.md).**
+Read sections 1–3 first: they explain the project and give each person one small
+starting task. The detailed roadmap below is for later stages.
 
 **Recommended direction:** an **AMD/Xilinx Zynq-7020 development board** running
 our own AXI4-Lite peripheral, connected to a custom KiCad SPI expansion PCB.
@@ -47,9 +51,9 @@ A PCB-only contribution is less aligned with the cited System IP role.
   complete documentation, and compatible Vivado/Vitis support. Check borrowing
   through NYU before purchasing. Equivalent documented Zynq boards can work, but
   connector pinouts, constraints, power limits, and boot steps must be rechecked.
-- **Custom PCB:** a low-voltage SPI peripheral/loopback board, with connector,
-  selected peripheral footprint, local power filtering, test points, and clear
-  signal/voltage labeling. Choose the actual peripheral after comparing datasheets.
+- **Custom PCB:** a low-voltage ADC interface board, with input conditioning/filtering,
+  connector, selected ADC footprint, local power filtering, and test points.
+  Choose the actual ADC after defining the input range and comparing datasheets.
 - **Later extension:** a custom carrier for a documented Zynq module if a board
   design role justifies it. A bare Zynq BGA plus custom DDR board is a separate,
   substantially larger project.
@@ -59,7 +63,12 @@ A PCB-only contribution is less aligned with the cited System IP role.
 
 ## The project we will build
 
-**AXI-controlled SPI acquisition and loopback system**
+**Low-frequency waveform capture first; software spectrum analysis afterward.**
+
+Capture a known lab signal through an ADC, buffer its samples in FPGA logic,
+read them from Arm software, and plot them on a computer. Add a software FFT
+after waveform capture works. The ADC, analog input range, bandwidth, and sample
+rate remain undecided. Loopback and synthetic samples are intermediate tests.
 
 ```text
 Arm Cortex-A9 C application on the host board
@@ -89,8 +98,10 @@ proper CDC design; start with a single internal logic clock where practical.
 
 ## Defined starting tasks
 
-**First session, without buying hardware:** Brandon starts B1/B2; Ahmad starts
-A1/A2. Then agree on the register map, connector, signal levels, and test behavior.
+**First session, without buying hardware:** Ahmad writes the signal-requirements
+note; Brandon simulates a simple counter. Follow [the first-session checklist](docs/beginner-reference.md#3-your-first-work-session-just-these-two-deliverables).
+The A/B tasks below follow those beginner exercises. Then agree on the register
+map, connector, signal levels, and test behavior.
 Brandon consolidates decisions in [docs/interfaces.md](docs/interfaces.md).
 
 ### Ahmad — expansion PCB, power/interface checks, and verification
@@ -105,8 +116,8 @@ Branch: `ahmad/power-io`. Create the named deliverable files as each task starts
 | **A4. Build independent verification** | Implement a Python scoreboard or self-checking SystemVerilog tests against the agreed register map; compare received data/order with expected transactions, including backpressure and reset. Cross-review Brandon's RTL rather than duplicating it. | Reproducible tests in planned `tb/` and `scripts/` paths, documented seeds/cases, and saved failure examples or debug notes. Use a simulator supported by the chosen tool versions. | B-R2, B-R3 |
 | **A5. Layout and later bench validation** | After schematic review, place/rout the expansion PCB with a continuous return path, local decoupling, access to SPI/rail test points, and verified connector orientation. | Layout review, filled-zone DRC and schematic parity, BOM, and bring-up checklist. After fabrication, record actual rail and SPI measurements with instrument/setup details. | A-R1, A-R2, fabricator's published rules |
 
-**Ahmad's first PR:** A1 worksheet + A2 peripheral/test proposal. You can do these
-while Brandon establishes the CPU/RTL interface.
+**Ahmad's first PR:** `Ahmad/signal-requirements.md` from the beginner guide.
+Follow with the A1 worksheet and A2 ADC/test proposal.
 
 **Resources for Ahmad**
 
@@ -126,8 +137,9 @@ the existing host FPGA rather than placing a bare UP5K or Zynq device on our PCB
 | **B4. Integrate the processing system and close timing** | Connect the peripheral to the Zynq processing system in Vivado, configure clock/reset, assign the chosen connector pins, and write appropriate XDC constraints. Start at the proposed 50 MHz internal clock. | Repeatable build/Tcl instructions, exact tool/part versions, utilization, timing reports, reviewed unconstrained paths and any CDC findings. Exclude generated tool caches from Git. | B-R1, B-R3, B-R4 |
 | **B5. Write the Arm-side demonstration** | Use a small bare-metal C application first: configure the peripheral, start transfers, read results/status, and log pass/fail plus counts. Add interrupts only after polling works. | Planned `software/` sources and a reproducible build. After hardware access, include programming instructions, logs, and ILA/bench observations where applicable. Distinguish a build from a hardware test. | B-R1, B-R3 |
 
-**Brandon's first PR:** platform comparison + register map. Device/connector pin
-assignments become final only after the actual host board is chosen.
+**Brandon's first PR:** counter, self-checking testbench, and reproduction note
+from the beginner guide. Follow with the platform comparison and register map.
+Device/connector pins become final only after the actual host board is chosen.
 
 **Resources for Brandon**
 
@@ -149,6 +161,9 @@ assignments become final only after the actual host board is chosen.
 5. **Hardware, when available:** demonstrate Arm C -> AXI -> SPI -> peripheral ->
    readback. Compare logic-analyzer/ILA traces with expected transactions and record
    actual throughput/latency and power measurements where measured.
+6. **Analyzer demonstration:** plot captured ADC data with voltage/time scaling,
+   then add a software FFT. Compare against a known generator signal and document
+   sample rate, record length, filtering, and measurement limitations.
 
 For interviews, each person should explain a design decision, a bug, a test that
 caught it, and their own contribution. A referral helps reach a team; the project
