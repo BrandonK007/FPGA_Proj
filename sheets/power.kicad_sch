@@ -1,0 +1,5 @@
+(kicad_sch (version 20250114) (generator "eeschema") (generator_version "9.0") (uuid "7bfb5fcb-c1b9-444f-8ea7-893f7aaed43f") (paper "A4") (lib_symbols)
+(text "Power - primary editor: Ahmad" (at 25 25 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "e3b263cd-5a6c-4186-a7b7-2b48d4449287"))
+(text "Collaboration scaffold only - no circuit or electrical interfaces implemented." (at 25 32 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "84e2250e-9830-40b6-a37c-1719c6e6909a"))
+(embedded_fonts no)
+)

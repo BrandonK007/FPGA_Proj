@@ -1,0 +1,8 @@
+# Review routing only; does not lock files or enforce branch protection.
+* @AhmadH05 @BrandonK007
+/sheets/power.kicad_sch @AhmadH05
+/sheets/io.kicad_sch @AhmadH05
+/sheets/fpga_core.kicad_sch @BrandonK007
+/sheets/clock_config.kicad_sch @BrandonK007
+/FPGA_Proj.kicad_sch @BrandonK007
+/FPGA_Proj.kicad_pcb @AhmadH05

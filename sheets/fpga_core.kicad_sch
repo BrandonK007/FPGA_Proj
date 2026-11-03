@@ -1,0 +1,5 @@
+(kicad_sch (version 20250114) (generator "eeschema") (generator_version "9.0") (uuid "6f9fe91c-bcfe-4fbc-8b50-dc3c4f43da0c") (paper "A4") (lib_symbols)
+(text "FPGA core - primary editor: Brandon" (at 25 25 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "173c2a1a-60c0-4648-a3ed-03eebca5edbd"))
+(text "Collaboration scaffold only - no circuit or electrical interfaces implemented." (at 25 32 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "fc90e298-200c-4772-9b65-4b219e63a301"))
+(embedded_fonts no)
+)

@@ -1,0 +1,5 @@
+(kicad_sch (version 20250114) (generator "eeschema") (generator_version "9.0") (uuid "8d935b5e-0a89-49f0-9b9a-c3896216a334") (paper "A4") (lib_symbols)
+(text "Clock and configuration - primary editor: Brandon" (at 25 25 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "56195117-61a6-40ba-9521-20867b4a2d5a"))
+(text "Collaboration scaffold only - no circuit or electrical interfaces implemented." (at 25 32 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "805c7fa5-c55f-4938-9d6d-66806cb60a3f"))
+(embedded_fonts no)
+)

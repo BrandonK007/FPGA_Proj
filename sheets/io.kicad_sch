@@ -1,0 +1,5 @@
+(kicad_sch (version 20250114) (generator "eeschema") (generator_version "9.0") (uuid "44f60bb9-731b-4e72-b070-d2d7dd26fd38") (paper "A4") (lib_symbols)
+(text "External I/O - primary editor: Ahmad" (at 25 25 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "02425101-14fb-450e-ba05-3d92462c4f08"))
+(text "Collaboration scaffold only - no circuit or electrical interfaces implemented." (at 25 32 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "0ebb6764-7451-4b0a-95a9-4ef239040041"))
+(embedded_fonts no)
+)

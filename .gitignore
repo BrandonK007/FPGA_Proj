@@ -1,0 +1,21 @@
+# KiCad local session state and backup/cache files
+*.kicad_prl
+*.kicad_sch.lck
+*.kicad_pcb.lck
+~*.lck
+~*.kicad_sch
+~*.kicad_pcb
+*.bak
+*.bck
+*.kicad_pcb-bak
+*.kicad_sch-bak
+*-backups/
+_autosave-*
+*.lck
+fp-info-cache
+# Generated output and OS/editor state
+/build/
+.DS_Store
+Thumbs.db
+desktop.ini
+__pycache__/
