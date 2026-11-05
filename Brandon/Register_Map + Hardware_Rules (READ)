@@ -1,0 +1,71 @@
+Offset  Register      Access          Purpose
+0x00	CONTROL	      Write	          Start SPI, clear FIFO, clear flags
+0x04	STATUS	      Read	          Busy, done, FIFO empty/full, errors
+0x08	CLK_DIV	      Read/write	  SPI clock divider
+0x0C	TX_DATA	      Read/write	  16-bit transmit value
+0x10	RX_DATA	      Read	          Oldest received FIFO word
+0x14	FIFO_COUNT	  Read	          Number of buffered words
+0x18	CONFIG	      Read/write	  Future configuration
+
+
+32-bit AXI4-Lite interface
+50 MHz internal clock target
+1 MHz initial SPI clock
+Mode 0 256 × 16-bit buffer
+
+
+
+Parameter	            Decision
+Target                  FPGA Zynq-7020
+Internal clock	        50 MHz
+AXI protocol	        AXI4-Lite
+AXI data width	        32 bits
+SPI mode	            Mode 0
+SPI frame size	        16 bits
+SPI data order	        MSB first
+Initial SPI frequency	1 MHz
+SPI clock divider	    25
+Number of SPI devices	1
+RX FIFO	                256 × 16 bits
+Reset	                Active low, synchronous
+Clock domains	        One 50 MHz domain initially
+
+*** IMPORTANT ***
+
+Rule A — Starting a transfer
+
+When the Arm CPU writes 1 to CONTROL bit 0, your AXI module generates a one-clock-cycle start pulse. A transfer is only accepted if the SPI master is idle and the receive FIFO has space.
+
+If SPI is busy or the FIFO is full, the command is rejected and a sticky error flag is set.
+
+Rule B — Receiving data
+
+A completed SPI transfer writes one 16-bit word into the RX FIFO. Received values are stored in the order they arrive. No previous unread data should be overwritten.
+
+Rule C — Reading an empty FIFO
+
+An AXI read of RX_DATA while empty returns zero with the AXI error response SLVERR.
+
+Rule D — Invalid addresses
+
+Unmapped register accesses and writes to read-only registers return SLVERR. They must not change internal state.
+
+Rule E — AXI backpressure
+
+An AXI response remains valid, with stable data and response status, until the processor accepts it. The slave can handle one outstanding read and one outstanding write in this initial implementation.
+
+Rule F — Reset and error clearing
+
+Reset clears the control state, FIFO pointers/count, and sticky flags. CONTROL bit 1 requests a FIFO flush, and bit 2 clears sticky done/error flags.
+
+Rule G — Partial writes
+
+The AXI WSTRB byte enables control which bytes of TX_DATA and CLK_DIV are updated. CONTROL commands execute only when byte lane 0 is enabled. A write with all strobes zero has no effect.
+
+Rule H — FIFO read timing
+
+Your current FIFO uses synchronous registered reads. We'll have the AXI interface retrieve a word into a response holding register before asserting RVALID.
+
+The FIFO's internal read pointer may advance while preparing that response, but the word is retained in the AXI response register until the processor accepts it. This provides correct bus-visible behavior during stalls.
+
+There is one additional detail for your later integration: simultaneous software commands, SPI completion, and reset/flush events need a defined priority. I recommend reset first, then flush, then normal transaction handling.
