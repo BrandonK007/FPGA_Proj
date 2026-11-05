@@ -4,12 +4,18 @@
 Read sections 1–3 first: they explain the project and give each person one small
 starting task. The detailed roadmap below is for later stages.
 
+**Continuing Ahmad's portion with an assistant?** Read the
+[Ahmad assistant handoff](Ahmad/ASSISTANT_HANDOFF.md) for ownership, current RTL,
+first-session steps, and verification deliverables.
+
 **Recommended direction:** an **AMD/Xilinx Zynq-7020 development board** running
 our own AXI4-Lite peripheral, connected to a custom KiCad SPI expansion PCB.
 This combines PCB/power/interface work with RTL verification and Arm-side software.
 
-**Current status:** planning and an empty KiCad scaffold. Neither contributor owns
-an FPGA board yet. The exact board, budget, peripheral component, and connector
+**Current status (November 4, 2026):** Brandon has added SPI, FIFO, and AXI register
+RTL plus testbenches under `Brandon/Vivado-Verilog/`; see the handoff for their
+scope and remaining integration work. KiCad remains an empty scaffold. Hardware
+access has not been confirmed. The exact board, budget, peripheral component, and connector
 are unselected; no hardware purchase or implementation is implied. A documented
 **Digilent Zybo Z7-20** is the reference example, not a purchase commitment.
 Ask the Arm contact which team/role they can refer into before buying hardware.
@@ -214,4 +220,6 @@ Brandon's admin settings.
 - [docs/lattice-starting-plan.md](docs/lattice-starting-plan.md): superseded UP5K alternative.
 - `libraries/`: project-local libraries using relative paths.
 - `.github/`: review checklist and ownership; `build/`: ignored generated output.
-- `rtl/`, `tb/`, `software/`, `scripts/`: planned additions, not implemented yet.
+- `Brandon/Vivado-Verilog/`: existing RTL and directed testbenches; not a completed analyzer.
+- `Ahmad/ASSISTANT_HANDOFF.md`: starting context for Ahmad's assistant.
+- Root `rtl/`, `tb/`, `software/`, `scripts/`: planned additions; preserve Brandon's existing source paths.
